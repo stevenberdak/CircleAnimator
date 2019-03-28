@@ -1,0 +1,20 @@
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+
+<?import java.lang.Double?>
+<GridPane fx:controller="app.FxController"
+          xmlns:fx="http://javafx.com/fxml"
+          hgap="10"
+          vgap="10">
+    <Label text="Geometry maker v0.1">
+        <fx:define>
+            <Double fx:id="PADDING" fx:value="5"/>
+        </fx:define>
+
+        <padding>
+            <Insets topRightBottomLeft="$PADDING"/>
+        </padding>
+    </Label>
+</GridPane>
