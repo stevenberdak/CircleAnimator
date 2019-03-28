@@ -6,9 +6,9 @@ import java.nio.channels.FileLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SingleInstanceService {
+class SingleInstanceService {
 
-    public static boolean lockFile(final String lockFile, final Logger logger) {
+    static boolean lockFile(final String lockFile, final Logger logger) {
         try {
             final File file = new File(lockFile);
             final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");

@@ -5,14 +5,18 @@ public abstract class Oscillator {
     private Range range;
     private double value;
     private double step;
+    private boolean radial;
 
-    Oscillator(Range range, Start startPosition, boolean reverse, double speed) {
+    Oscillator(Range range, Start startPosition, boolean reverse, boolean radial, double speed) {
         this.range = range;
-        this.step = (range.max - range.min) * speed;
+
+        setSpeed(speed);
 
         if (reverse) {
             step = -step;
         }
+
+        this.radial = radial;
 
         switch (startPosition) {
             case START:
@@ -28,11 +32,21 @@ public abstract class Oscillator {
     }
 
     double doStep() {
-        if (value < range.min || value > range.max) {
+        double initialValue = value;
+
+        if (radial) {
+            if (value < range.min) {
+                value = range.max;
+            } else if (value > range.max) {
+                value = range.min;
+            }
+        }
+        else if (value < range.min || value > range.max) {
             step = -step;
         }
+
         value = value + step;
-        return step(value);
+        return step(initialValue);
     }
 
     protected abstract double step(double value);
@@ -48,5 +62,9 @@ public abstract class Oscillator {
 
     enum Start {
         START, CENTER, END
+    }
+
+    public void setSpeed(double speed) {
+        this.step = (range.max - range.min) * speed;
     }
 }

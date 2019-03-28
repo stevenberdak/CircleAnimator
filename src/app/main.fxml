@@ -4,17 +4,52 @@
 <?import javafx.geometry.Insets?>
 
 <?import java.lang.Double?>
-<GridPane fx:controller="app.FxController"
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.shape.Line?>
+<GridPane fx:controller="app.controllers.FxController"
           xmlns:fx="http://javafx.com/fxml"
           hgap="10"
-          vgap="10">
-    <Label text="Geometry maker v0.1">
-        <fx:define>
-            <Double fx:id="PADDING" fx:value="5"/>
-        </fx:define>
-
-        <padding>
-            <Insets topRightBottomLeft="$PADDING"/>
-        </padding>
-    </Label>
+          vgap="10" alignment="BOTTOM_LEFT">
+    <fx:define>
+        <Double fx:id="PADDING" fx:value="10"/>
+    </fx:define>
+    <padding>
+        <Insets topRightBottomLeft="$PADDING"/>
+    </padding>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="aboutLabel"/>
+    <Line GridPane.columnIndex="0" GridPane.rowIndex="1"
+          stroke="darkcyan"
+          endX="100"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="2" fx:id="speedLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="3" fx:id="speedSlider"
+            min="-.05"
+            max=".05"
+            showTickLabels="true"
+            showTickMarks="true"
+            majorTickUnit=".025"
+            minorTickCount="4"
+            value=".025"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="4" fx:id="trailLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="5" fx:id="trailSlider"
+            max="50"
+            showTickLabels="true"
+            showTickMarks="true"
+            minorTickCount="4"
+            value="25"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="6" fx:id="xMpLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="7" fx:id="xMpSlider"
+            max="180"
+            showTickLabels="true"
+            showTickMarks="true"
+            majorTickUnit="90"
+            minorTickCount="8"
+            value="180"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="8" fx:id="yMpLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="9" fx:id="yMpSlider"
+            max="180"
+            showTickLabels="true"
+            showTickMarks="true"
+            majorTickUnit="90"
+            minorTickCount="8"
+            value="180"/>
 </GridPane>
