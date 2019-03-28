@@ -55,7 +55,7 @@ public class Main extends Application {
                 dotController.setScreenHeight(newValue.intValue()));
 
         // Create oscillators.
-        Oscillator xOscillator = new Oscillator(new Oscillator.Range(-180, 180), Oscillator.Start.START, false,
+        Oscillator xOscillator = new Oscillator(new Oscillator.Range(0, 180), Oscillator.Start.START, false,
                 .0001) {
             @Override
             protected double step(double value) {
@@ -63,7 +63,7 @@ public class Main extends Application {
             }
         };
 
-        Oscillator yOscillator = new Oscillator(new Oscillator.Range(-180, 180), Oscillator.Start.CENTER, false,
+        Oscillator yOscillator = new Oscillator(new Oscillator.Range(0, 180), Oscillator.Start.CENTER, false,
                 .0001) {
             @Override
             protected double step(double value) {
