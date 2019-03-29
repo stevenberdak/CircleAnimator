@@ -7,8 +7,8 @@ public class TrailController extends FlexiblePaneController {
     private int trailLength, radius;
 
     public TrailController(int trailLength, int radius, int screenWidth, int screenHeight) {
-        setScreenWidth(screenWidth);
-        setScreenHeight(screenHeight);
+        setOriginXScreenWidth(screenWidth);
+        setOriginYScreenHeight(screenHeight);
         this.trailLength = trailLength;
         this.radius = radius;
     }

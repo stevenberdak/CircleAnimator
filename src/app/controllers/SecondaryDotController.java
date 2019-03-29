@@ -2,15 +2,18 @@ package app.controllers;
 
 import javafx.scene.shape.Circle;
 
-public class DotController extends FlexiblePaneController {
+public class SecondaryDotController extends FlexiblePaneController {
 
     private Circle dot;
 
-    public DotController(Circle dot, int screenWidth, int screenHeight) {
+    public SecondaryDotController(Circle circle, int initialX, int initialY) {
         super();
-        setScreenWidth(screenWidth);
-        setScreenHeight(screenHeight);
-        init(dot);
+        setOriginXPoint(initialX);
+        setOriginYPoint(initialY);
+
+        init(circle);
+
+        setPosition(initialX, initialY);
     }
 
     private void init(Circle dot) {
@@ -18,7 +21,7 @@ public class DotController extends FlexiblePaneController {
         getPane().getChildren().add(dot);
     }
 
-    public void setPosition(double x, double y) {
+    void setPosition(double x, double y) {
         dot.setCenterX(graphX(x));
         dot.setCenterY(graphY(y));
     }

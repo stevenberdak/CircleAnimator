@@ -11,12 +11,20 @@ public abstract class FlexiblePaneController implements HasPane {
         this.pane = new Pane();
     }
 
-    public void setScreenWidth(int screenWidth) {
+    public void setOriginXScreenWidth(int screenWidth) {
         this.originX = (double) screenWidth / 2;
     }
 
-    public void setScreenHeight(int screenHeight) {
+    public void setOriginYScreenHeight(int screenHeight) {
         this.originY = (double) screenHeight / 2;
+    }
+    
+    public void setOriginXPoint(int originX) {
+        this.originX = originX;
+    }
+
+    public void setOriginYPoint(int originY) {
+        this.originY = originY;
     }
 
     double graphX(double value) {

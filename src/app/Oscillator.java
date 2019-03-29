@@ -31,7 +31,7 @@ public abstract class Oscillator {
         }
     }
 
-    double doStep() {
+    public double doStep() {
         double initialValue = value;
 
         if (radial) {

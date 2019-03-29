@@ -10,10 +10,10 @@ public class FxController {
     private Label aboutLabel;
 
     @FXML
-    private Label speedLabel, trailLabel, xMpLabel, yMpLabel;
+    private Label speedLabel, trailLabel, mainXMultiplierLabel, mainYMultiplierLabel;
 
     @FXML
-    private Slider speedSlider, trailSlider, xMpSlider, yMpSlider;
+    private Slider speedSlider, trailSlider, mainXMultiplierSlider, mainYMultiplierSlider;
 
     public FxController() {
     }
@@ -31,11 +31,11 @@ public class FxController {
     }
 
     public void setXMpLabel(String labelText) {
-        xMpLabel.setText(labelText);
+        mainXMultiplierLabel.setText(labelText);
     }
 
     public void setYMpLabel(String labelText) {
-        yMpLabel.setText(labelText);
+        mainYMultiplierLabel.setText(labelText);
     }
 
     public Slider getSpeedSlider() {
@@ -46,11 +46,11 @@ public class FxController {
         return trailSlider;
     }
 
-    public Slider getXMpSlider() {
-        return xMpSlider;
+    public Slider getXMultiplaierSlider() {
+        return mainXMultiplierSlider;
     }
 
-    public Slider getYMpSlider() {
-        return yMpSlider;
+    public Slider getYMultiplierSlider() {
+        return mainYMultiplierSlider;
     }
 }

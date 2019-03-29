@@ -36,20 +36,20 @@
             showTickMarks="true"
             minorTickCount="4"
             value="25"/>
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="6" fx:id="xMpLabel"/>
-    <Slider GridPane.columnIndex="0" GridPane.rowIndex="7" fx:id="xMpSlider"
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="6" fx:id="mainXMultiplierLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="7" fx:id="mainXMultiplierSlider"
             max="180"
             showTickLabels="true"
             showTickMarks="true"
             majorTickUnit="90"
             minorTickCount="8"
-            value="180"/>
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="8" fx:id="yMpLabel"/>
-    <Slider GridPane.columnIndex="0" GridPane.rowIndex="9" fx:id="yMpSlider"
+            value="110"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="8" fx:id="mainYMultiplierLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="9" fx:id="mainYMultiplierSlider"
             max="180"
             showTickLabels="true"
             showTickMarks="true"
             majorTickUnit="90"
             minorTickCount="8"
-            value="180"/>
+            value="110"/>
 </GridPane>
