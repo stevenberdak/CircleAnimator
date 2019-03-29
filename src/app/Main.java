@@ -1,16 +1,16 @@
 package app;
 
 import app.controllers.FxController;
-import app.controllers.MainCircleController;
-import app.controllers.SecondaryDotController;
+import app.controllers.CircleController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -22,18 +22,17 @@ public class Main extends Application {
 
     private static final String APP_STRINGS = "app_strings";
     private static final String LOCK_FILE_NAME = ".lock";
-    private static final int INITIAL_WIDTH = 800;
-    private static final int INITIAL_HEIGHT = 500;
-    private static final int DOT_RADIUS = 5;
+    private static final int INITIAL_WIDTH = 900;
+    private static final int INITIAL_HEIGHT = 600;
+    private static final int DOT_RADIUS = 4;
     private static final double WIDTH_OFFSET = 1.2;
 
     private static FxController fxController;
 
     private ResourceBundle appStrings;
     private Logger logger;
-
-    private MainCircleController mainCircleController;
-    private SecondaryDotController secondaryDotController;
+    private Timeline timeline;
+    private CircleController circleController;
 
     public Main() {
         logger = Logger.getLogger(getResourceString("app_name"), "log_messages");
@@ -47,38 +46,31 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         logger.log(Level.INFO, "application_start");
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(appStrings.getString("main_fxml_file")));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(appStrings.getString("main_fxml_file")),
+                appStrings);
         Parent root = fxmlLoader.load();
         fxController = fxmlLoader.getController();
 
-        mainCircleController = new MainCircleController(DOT_RADIUS, (int) fxController.getTrailSlider().getValue(),
+        circleController = new CircleController(DOT_RADIUS, (int) fxController.getTrailSlider().getValue(),
                 offsetWidth(INITIAL_WIDTH, WIDTH_OFFSET), INITIAL_HEIGHT);
-        setMainOscillators();
-        mainCircleController.update();
+        initializeOscillators();
+        circleController.update();
 
         initializeFxController(fxController);
 
+        circleController.setSatelliteDistance((int) fxController.getSatelliteDistanceSlider().getValue());
+
         StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(mainCircleController.getTrailController().getPane(),
-                mainCircleController.getMainDotController().getPane());
-
-        secondaryDotController = new SecondaryDotController(new Circle(DOT_RADIUS),
-                (int) mainCircleController.getMainDotController().getDot().getCenterX(),
-                (int) mainCircleController.getMainDotController().getDot().getCenterY());
-
-        stackPane.getChildren().add(secondaryDotController.getPane());
-
-        // Add root.
-        stackPane.getChildren().add(root);
+        stackPane.getChildren().addAll(circleController.getTrailController().getPane(),
+                circleController.getCenterDotController().getPane(),
+                circleController.getSatelliteDotController().getPane(),
+                root);
 
         // Add layout to scene.
         Scene scene = new Scene(stackPane, INITIAL_WIDTH, INITIAL_HEIGHT);
         attachSceneListeners(scene);
 
-        // Create timeline.
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), t -> mainCircleController.update()));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        setupTimeline();
 
         // Set up window.
         primaryStage.setTitle(getResourceString("app_name"));
@@ -86,24 +78,33 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    private void setupTimeline() {
+        // Create timeline.
+        timeline = new Timeline(new KeyFrame(Duration.millis(10), t -> circleController.update()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setRate(fxController.getSpeedMultiplierSlider().getValue());
+        timeline.play();
+    }
+
     private void initializeFxController(FxController controller) {
-        controller.setAboutLabelText(getResourceString("about_label"));
-        controller.setSpeedLabelText(getResourceString("speed_label"));
-        controller.setTrailLabelText(getResourceString("trail_label"));
-        controller.setXMpLabel(getResourceString("main_x_mp_label"));
-        controller.setYMpLabel(getResourceString("main_y_mp_label"));
         controller.getSpeedSlider().valueProperty().addListener((observable, oldValue, newValue) ->
-                mainCircleController.setOscillatorSpeeds(newValue.doubleValue()));
+                circleController.setOscillatorSpeeds(newValue.doubleValue()));
         controller.getTrailSlider().valueProperty().addListener((observable, oldValue, newValue) ->
-                mainCircleController.getTrailController().setTrailLength(newValue.intValue()));
+                circleController.getTrailController().setTrailLength(newValue.intValue()));
+        controller.getSatelliteSpeedSlider().valueProperty().addListener((observable, oldValue, newValue) ->
+                circleController.setSatelliteSpeed(newValue.doubleValue()));
+        controller.getSatelliteDistanceSlider().valueProperty().addListener((observable, oldValue, newValue) ->
+                circleController.setSatelliteDistance(newValue.intValue()));
+        controller.getSpeedMultiplierSlider().valueProperty().addListener((observable, oldValue, newValue) ->
+                timeline.setRate(newValue.intValue()));
     }
 
     private void attachSceneListeners(Scene scene) {
         scene.widthProperty().addListener((observable, oldValue, newValue) ->
-                mainCircleController.setScreenWidth(offsetWidth(newValue.intValue(), WIDTH_OFFSET)));
+                circleController.setScreenWidth(offsetWidth(newValue.intValue(), WIDTH_OFFSET)));
 
         scene.heightProperty().addListener((observable, oldValue, newValue) ->
-                mainCircleController.setScreenHeight(newValue.intValue()));
+                circleController.setScreenHeight(newValue.intValue()));
     }
 
     private String getResourceString(String key) {
@@ -118,20 +119,29 @@ public class Main extends Application {
         return (int) (width * coefficient);
     }
 
-    private void setMainOscillators() {
-        mainCircleController.setXOscillator(new Oscillator(new Oscillator.Range(0, 360), Oscillator.Start.START, false,
-                true, fxController.getSpeedSlider().getValue()) {
+    private void initializeOscillators() {
+        circleController.setXOscillator(new Oscillator(new Oscillator.Range(0, 360), Oscillator.Start.START,
+                false, true, fxController.getSpeedSlider().getValue()) {
             @Override
             protected double step(double value) {
-                return fxController.getXMultiplaierSlider().getValue() * Math.cos(Math.toRadians(value));
+                return fxController.getXMultiplaierSlider().getValue() * (Math.cos(Math.toRadians(value)));
             }
         });
 
-        mainCircleController.setYOscillator(new Oscillator(new Oscillator.Range(0, 360), Oscillator.Start.START, false,
-                true, fxController.getSpeedSlider().getValue()) {
+        circleController.setYOscillator(new Oscillator(new Oscillator.Range(0, 360), Oscillator.Start.START,
+                false, true, fxController.getSpeedSlider().getValue()) {
             @Override
             protected double step(double value) {
-                return fxController.getYMultiplierSlider().getValue() * Math.sin(Math.toRadians(value));
+                return fxController.getYMultiplierSlider().getValue() * (Math.sin(Math.toRadians(value)));
+            }
+        });
+
+        circleController.setSatelliteOscillator(new Oscillator(new Oscillator.Range(0, 360), Oscillator.Start.CENTER,
+                false, true, fxController.getSatelliteSpeedSlider().getValue()) {
+
+            @Override
+            protected double step(double value) {
+                return value;
             }
         });
     }

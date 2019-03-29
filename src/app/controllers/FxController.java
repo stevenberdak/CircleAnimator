@@ -1,45 +1,41 @@
 package app.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
-public class FxController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class FxController implements Initializable {
 
     @FXML
-    private Label aboutLabel;
+    private Label speedLabel, satelliteSpeedLabel, satelliteDistanceLabel, speedMultiplierLabel, trailLabel,
+            mainXMultiplierLabel,
+            mainYMultiplierLabel;
 
     @FXML
-    private Label speedLabel, trailLabel, mainXMultiplierLabel, mainYMultiplierLabel;
-
-    @FXML
-    private Slider speedSlider, trailSlider, mainXMultiplierSlider, mainYMultiplierSlider;
+    private Slider speedSlider, satelliteSpeedSlider, satelliteDistanceSlider, trailSlider, mainXMultiplierSlider,
+            mainYMultiplierSlider, speedMultiplierSlider;
 
     public FxController() {
     }
 
-    public void setAboutLabelText(String labelText) {
-        aboutLabel.setText(labelText);
-    }
-
-    public void setSpeedLabelText(String labelText) {
-        speedLabel.setText(labelText);
-    }
-
-    public void setTrailLabelText(String labelText) {
-        trailLabel.setText(labelText);
-    }
-
-    public void setXMpLabel(String labelText) {
-        mainXMultiplierLabel.setText(labelText);
-    }
-
-    public void setYMpLabel(String labelText) {
-        mainYMultiplierLabel.setText(labelText);
-    }
-
     public Slider getSpeedSlider() {
         return speedSlider;
+    }
+
+    public Slider getSatelliteSpeedSlider() {
+        return satelliteSpeedSlider;
+    }
+
+    public Slider getSatelliteDistanceSlider() {
+        return satelliteDistanceSlider;
+    }
+
+    public Slider getSpeedMultiplierSlider() {
+        return speedMultiplierSlider;
     }
 
     public Slider getTrailSlider() {
@@ -52,5 +48,16 @@ public class FxController {
 
     public Slider getYMultiplierSlider() {
         return mainYMultiplierSlider;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        speedLabel.setText(resources.getString("speed_label"));
+        satelliteSpeedLabel.setText(resources.getString("satellite_speed_label"));
+        satelliteDistanceLabel.setText(resources.getString("satellite_distance_label"));
+        trailLabel.setText(resources.getString("trail_label"));
+        mainXMultiplierLabel.setText(resources.getString("main_x_mp_label"));
+        mainYMultiplierLabel.setText(resources.getString("main_y_mp_label"));
+        speedMultiplierLabel.setText(resources.getString("speed_multiplier_label"));
     }
 }

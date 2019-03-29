@@ -16,7 +16,7 @@ public class TrailController extends FlexiblePaneController {
     public void addCoordinate(Coordinate coordinate) {
         getPane().getChildren().add(new Circle(coordinate.getX(), coordinate.getY(), radius));
 
-        while (getPane().getChildren().size() > trailLength) {
+        while (getPane().getChildren().size() * 2 > trailLength) {
             getPane().getChildren().remove(0);
         }
     }

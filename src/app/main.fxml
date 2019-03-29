@@ -5,7 +5,6 @@
 
 <?import java.lang.Double?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.shape.Line?>
 <GridPane fx:controller="app.controllers.FxController"
           xmlns:fx="http://javafx.com/fxml"
           hgap="10"
@@ -16,40 +15,63 @@
     <padding>
         <Insets topRightBottomLeft="$PADDING"/>
     </padding>
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="aboutLabel"/>
-    <Line GridPane.columnIndex="0" GridPane.rowIndex="1"
-          stroke="darkcyan"
-          endX="100"/>
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="2" fx:id="speedLabel"/>
-    <Slider GridPane.columnIndex="0" GridPane.rowIndex="3" fx:id="speedSlider"
-            min="-.05"
-            max=".05"
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="speedLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="speedSlider"
+            min="-.025"
+            max=".025"
             showTickLabels="true"
             showTickMarks="true"
             majorTickUnit=".025"
             minorTickCount="4"
-            value=".025"/>
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="4" fx:id="trailLabel"/>
-    <Slider GridPane.columnIndex="0" GridPane.rowIndex="5" fx:id="trailSlider"
-            max="50"
+            value=".007"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="2" fx:id="satelliteSpeedLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="3" fx:id="satelliteSpeedSlider"
+            min="-.025"
+            max=".025"
+            showTickLabels="true"
+            showTickMarks="true"
+            majorTickUnit=".025"
+            minorTickCount="4"
+            value="-.025"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="4" fx:id="speedMultiplierLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="5" fx:id="speedMultiplierSlider"
+            min="0"
+            max="10"
+            showTickLabels="true"
+            showTickMarks="true"
+            majorTickUnit="5"
+            value="1"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="6" fx:id="satelliteDistanceLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="7" fx:id="satelliteDistanceSlider"
+            min="-180"
+            max="0"
+            showTickLabels="true"
+            value="-90"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="8" fx:id="trailLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="9" fx:id="trailSlider"
+            max="500"
             showTickLabels="true"
             showTickMarks="true"
             minorTickCount="4"
-            value="25"/>
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="6" fx:id="mainXMultiplierLabel"/>
-    <Slider GridPane.columnIndex="0" GridPane.rowIndex="7" fx:id="mainXMultiplierSlider"
+            value="75"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="10" fx:id="mainXMultiplierLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="11" fx:id="mainXMultiplierSlider"
             max="180"
             showTickLabels="true"
             showTickMarks="true"
             majorTickUnit="90"
             minorTickCount="8"
-            value="110"/>
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="8" fx:id="mainYMultiplierLabel"/>
-    <Slider GridPane.columnIndex="0" GridPane.rowIndex="9" fx:id="mainYMultiplierSlider"
+            blockIncrement="20"
+            snapToTicks="true"
+            value="180"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="12" fx:id="mainYMultiplierLabel"/>
+    <Slider GridPane.columnIndex="0" GridPane.rowIndex="13" fx:id="mainYMultiplierSlider"
             max="180"
             showTickLabels="true"
             showTickMarks="true"
             majorTickUnit="90"
             minorTickCount="8"
-            value="110"/>
+            blockIncrement="20"
+            snapToTicks="true"
+            value="180"/>
 </GridPane>
