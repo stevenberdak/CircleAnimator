@@ -6,14 +6,14 @@ public class TrailController extends FlexiblePaneController {
 
     private int trailLength, radius;
 
-    public TrailController(int trailLength, int radius, int screenWidth, int screenHeight) {
+    TrailController(int trailLength, int radius, int screenWidth, int screenHeight) {
         setOriginXScreenWidth(screenWidth);
         setOriginYScreenHeight(screenHeight);
         this.trailLength = trailLength;
         this.radius = radius;
     }
 
-    public void addCoordinate(Coordinate coordinate) {
+    void addCoordinate(Coordinate coordinate) {
         getPane().getChildren().add(new Circle(coordinate.getX(), coordinate.getY(), radius));
 
         while (getPane().getChildren().size() * 2 > trailLength) {
@@ -21,11 +21,11 @@ public class TrailController extends FlexiblePaneController {
         }
     }
 
-    public static class Coordinate {
+    static class Coordinate {
 
         private double x, y;
 
-        public Coordinate(double x, double y) {
+        Coordinate(double x, double y) {
             this.x = x;
             this.y = y;
         }

@@ -28,7 +28,7 @@ public class DotController extends FlexiblePaneController {
         dot.setCenterY(graphY(y));
     }
 
-    public Circle getDot() {
+    Circle getDot() {
         return dot;
     }
 }

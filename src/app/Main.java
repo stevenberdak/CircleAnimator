@@ -1,12 +1,10 @@
 package app;
 
-import app.controllers.FxController;
 import app.controllers.CircleController;
+import app.controllers.FxController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -35,7 +33,8 @@ public class Main extends Application {
     private CircleController circleController;
 
     public Main() {
-        logger = Logger.getLogger(getResourceString("app_name"), "log_messages");
+        appStrings = ResourceBundle.getBundle(APP_STRINGS);
+        logger = Logger.getLogger(appStrings.getString("app_name"), "log_messages");
         if (!SingleInstanceService.lockFile(LOCK_FILE_NAME, logger)) {
             logger.log(Level.INFO, "file_locked");
             System.exit(0);
@@ -73,7 +72,7 @@ public class Main extends Application {
         setupTimeline();
 
         // Set up window.
-        primaryStage.setTitle(getResourceString("app_name"));
+        primaryStage.setTitle(appStrings.getString("app_name"));
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -105,14 +104,6 @@ public class Main extends Application {
 
         scene.heightProperty().addListener((observable, oldValue, newValue) ->
                 circleController.setScreenHeight(newValue.intValue()));
-    }
-
-    private String getResourceString(String key) {
-        if (appStrings == null) {
-            appStrings = ResourceBundle.getBundle(APP_STRINGS);
-        }
-
-        return appStrings.getString(key);
     }
 
     private static int offsetWidth(int width, double coefficient) {
