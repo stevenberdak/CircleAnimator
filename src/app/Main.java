@@ -60,9 +60,9 @@ public class Main extends Application {
         circleController.setSatelliteDistance((int) fxController.getSatelliteDistanceSlider().getValue());
 
         StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(circleController.getTrailController().getPane(),
-                circleController.getCenterDotController().getPane(),
-                circleController.getSatelliteDotController().getPane(),
+        stackPane.getChildren().addAll(circleController.getTrailGraphingPane(),
+                circleController.getCenterDotPane(),
+                circleController.getSatelliteDotPane(),
                 root);
 
         // Add layout to scene.
@@ -89,7 +89,7 @@ public class Main extends Application {
         controller.getSpeedSlider().valueProperty().addListener((observable, oldValue, newValue) ->
                 circleController.setOscillatorSpeeds(newValue.doubleValue()));
         controller.getTrailSlider().valueProperty().addListener((observable, oldValue, newValue) ->
-                circleController.getTrailController().setTrailLength(newValue.intValue()));
+                circleController.getTrailGraphingPane().setTrailLength(newValue.intValue()));
         controller.getSatelliteSpeedSlider().valueProperty().addListener((observable, oldValue, newValue) ->
                 circleController.setSatelliteSpeed(newValue.doubleValue()));
         controller.getSatelliteDistanceSlider().valueProperty().addListener((observable, oldValue, newValue) ->

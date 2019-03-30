@@ -5,16 +5,16 @@ import javafx.scene.shape.Circle;
 
 public class CircleController {
 
-    private DotController centerDotController, satelliteDotController;
-    private TrailController trailController;
+    private DotGraphingPane centerDotPane, satelliteDotPane;
+    private TrailGraphingPane trailGraphingPane;
     private Oscillator xOscillator, yOscillator, satelliteOscillator;
 
     private int satelliteDistance;
 
     public CircleController(int dotRadius, int initialTrailValue, int initialWidth, int initialHeight) {
-        centerDotController = new DotController(new Circle(dotRadius), initialWidth, initialHeight);
-        satelliteDotController = new DotController(new Circle(dotRadius));
-        trailController = new TrailController(initialTrailValue, dotRadius, initialWidth, initialHeight);
+        centerDotPane = new DotGraphingPane(new Circle(dotRadius), initialWidth, initialHeight);
+        satelliteDotPane = new DotGraphingPane(new Circle(dotRadius));
+        trailGraphingPane = new TrailGraphingPane(initialTrailValue, dotRadius, initialWidth, initialHeight);
     }
 
     public void setXOscillator(Oscillator oscillator) {
@@ -29,34 +29,34 @@ public class CircleController {
         this.satelliteOscillator = oscillator;
     }
 
-    public DotController getCenterDotController() {
-        return centerDotController;
+    public DotGraphingPane getCenterDotPane() {
+        return centerDotPane;
     }
 
-    public DotController getSatelliteDotController() {
-        return satelliteDotController;
+    public DotGraphingPane getSatelliteDotPane() {
+        return satelliteDotPane;
     }
 
-    public TrailController getTrailController() {
-        return trailController;
+    public TrailGraphingPane getTrailGraphingPane() {
+        return trailGraphingPane;
     }
 
     public void update() {
-        centerDotController.setPosition(xOscillator.doStep(), yOscillator.doStep());
+        centerDotPane.setPosition(xOscillator.doStep(), yOscillator.doStep());
 
-        satelliteDotController.setOriginXPoint((int) centerDotController.getDot().getCenterX());
-        satelliteDotController.setOriginYPoint((int) centerDotController.getDot().getCenterY());
+        satelliteDotPane.setOriginXPoint((int) centerDotPane.getDot().getCenterX());
+        satelliteDotPane.setOriginYPoint((int) centerDotPane.getDot().getCenterY());
 
         int angle = (int) satelliteOscillator.doStep();
 
-        satelliteDotController.setPosition(satelliteDistance * Math.cos(Math.toRadians(angle)),
+        satelliteDotPane.setPosition(satelliteDistance * Math.cos(Math.toRadians(angle)),
                 satelliteDistance * Math.sin(Math.toRadians(angle)));
 
-        trailController.addCoordinate(new TrailController.Coordinate(centerDotController.getDot().getCenterX(),
-                centerDotController.getDot().getCenterY()));
+        trailGraphingPane.addCoordinate(new TrailGraphingPane.Coordinate(centerDotPane.getDot().getCenterX(),
+                centerDotPane.getDot().getCenterY()));
 
-        trailController.addCoordinate(new TrailController.Coordinate(satelliteDotController.getDot().getCenterX(),
-                satelliteDotController.getDot().getCenterY()));
+        trailGraphingPane.addCoordinate(new TrailGraphingPane.Coordinate(satelliteDotPane.getDot().getCenterX(),
+                satelliteDotPane.getDot().getCenterY()));
     }
 
     public void setSatelliteSpeed(double speed) {
@@ -68,13 +68,13 @@ public class CircleController {
     }
 
     public void setScreenWidth(int width) {
-        centerDotController.setOriginXScreenWidth(width);
-        trailController.setOriginXScreenWidth(width);
+        centerDotPane.setOriginXScreenWidth(width);
+        trailGraphingPane.setOriginXScreenWidth(width);
     }
 
     public void setScreenHeight(int height) {
-        centerDotController.setOriginYScreenHeight(height);
-        trailController.setOriginYScreenHeight(height);
+        centerDotPane.setOriginYScreenHeight(height);
+        trailGraphingPane.setOriginYScreenHeight(height);
     }
 
     public void setOscillatorSpeeds(double speed) {

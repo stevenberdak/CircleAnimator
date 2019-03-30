@@ -2,11 +2,11 @@ package app.controllers;
 
 import javafx.scene.shape.Circle;
 
-public class TrailController extends FlexiblePaneController {
+public class TrailGraphingPane extends GraphingPane {
 
     private int trailLength, radius;
 
-    TrailController(int trailLength, int radius, int screenWidth, int screenHeight) {
+    TrailGraphingPane(int trailLength, int radius, int screenWidth, int screenHeight) {
         setOriginXScreenWidth(screenWidth);
         setOriginYScreenHeight(screenHeight);
         this.trailLength = trailLength;
@@ -14,10 +14,10 @@ public class TrailController extends FlexiblePaneController {
     }
 
     void addCoordinate(Coordinate coordinate) {
-        getPane().getChildren().add(new Circle(coordinate.getX(), coordinate.getY(), radius));
+        getChildren().add(new Circle(coordinate.getX(), coordinate.getY(), radius));
 
-        while (getPane().getChildren().size() * 2 > trailLength) {
-            getPane().getChildren().remove(0);
+        while (getChildren().size() * 2 > trailLength) {
+            getChildren().remove(0);
         }
     }
 

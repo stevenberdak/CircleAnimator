@@ -2,13 +2,12 @@ package app.controllers;
 
 import javafx.scene.layout.Pane;
 
-public abstract class FlexiblePaneController implements HasPane {
+public abstract class GraphingPane extends Pane {
 
-    private Pane pane;
     private double originX, originY;
 
-    FlexiblePaneController() {
-        this.pane = new Pane();
+    GraphingPane() {
+
     }
 
     void setOriginXScreenWidth(int screenWidth) {
@@ -33,9 +32,5 @@ public abstract class FlexiblePaneController implements HasPane {
 
     double graphY(double value) {
         return originY + -value;
-    }
-
-    public Pane getPane() {
-        return pane;
     }
 }
